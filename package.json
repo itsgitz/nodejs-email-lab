@@ -1,0 +1,17 @@
+{
+  "name": "nodejs-email-lab",
+  "version": "1.0.0",
+  "description": "Send email using Node.JS",
+  "main": "index.js",
+  "author": "itsgitz",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "nodemailer": "^6.9.16",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.17"
+  }
+}
