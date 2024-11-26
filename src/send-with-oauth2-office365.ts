@@ -7,6 +7,10 @@ const emailCredentialSchema = z.object({
   port: z.number(),
   username: z.string(),
   password: z.string(),
+  clientId: z.string(),
+  clientSecret: z.string(),
+  refreshToken: z.string(),
+  accessToken: z.string(),
 })
 
 
@@ -17,17 +21,36 @@ async function main() {
       port: Number(process.env.SMTP_PORT),
       username: process.env.SMTP_USERNAME,
       password: process.env.SMTP_PASSWORD,
+      clientId: process.env.OAUTH2_CLIENT_ID,
+      clientSecret: process.env.OAUTH2_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH2_REFRESH_TOKEN,
+      accessToken: process.env.OAUTH2_ACCESS_TOKEN,
     }) 
 
     const transporter = createTransport({ 
+      service: 'Office365',
       host: emailCredential.host,
       port: emailCredential.port,
       secure: false,
       auth: {
+        type: 'OAuth2',
         user: emailCredential.username,
-        pass: emailCredential.password,
+        clientId: emailCredential.clientId,
+        clientSecret: emailCredential.clientSecret,
+        refreshToken: emailCredential.refreshToken,
+        accessToken: emailCredential.accessToken,
       }
     })
+
+    // verify connection configuration
+    transporter.verify(function (error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Server is ready to take our messages");
+      }
+    });
+
 
     const info = await transporter.sendMail({
       from: emailCredential.username,
