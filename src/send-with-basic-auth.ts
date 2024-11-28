@@ -19,6 +19,8 @@ async function main() {
       password: process.env.SMTP_PASSWORD,
     }) 
 
+    console.log(emailCredential)
+
     const transporter = createTransport({ 
       host: emailCredential.host,
       port: emailCredential.port,
@@ -29,7 +31,9 @@ async function main() {
       },
       tls: {
         ciphers: 'SSLv3'
-      }
+      },
+      logger: true,
+      debug: true
     })
 
     // verify connection configuration
@@ -44,10 +48,10 @@ async function main() {
 
     const info = await transporter.sendMail({
       from: emailCredential.username,
-      to: ['anggit.ginanjar.dev@gmail.com', 'anggitmg.tkjb@gmail.com'].join(','),
+      to: ['anggit.ginanjar.dev@gmail.com', 'anggitmg.tkjb@gmail.com', 'galih@finnet.co.id'].join(','),
       subject: 'Hello hello hello!!!!!!',
       text: 'Hello!',
-      html: '<h1>Hello!</h1>'
+      html: '<h1>Hello! SMTP AUTHENTICATED!</h1>'
     })
 
     console.log(`message sent: ${info.messageId}`)

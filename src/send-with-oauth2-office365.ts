@@ -39,7 +39,9 @@ async function main() {
         clientSecret: emailCredential.clientSecret,
         refreshToken: emailCredential.refreshToken,
         accessToken: emailCredential.accessToken,
-      }
+      },
+      logger: true,
+      debug: true
     })
 
     // verify connection configuration
